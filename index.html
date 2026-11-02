@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى ولاء… لأن قلبي لا يريد أن يكون سببًا في حزنكِ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Arabic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: {
+                            DEFAULT: '#0b0914',
+                            deep: '#06040a',
+                            light: '#120e24',
+                            card: 'rgba(18, 14, 36, 0.75)'
+                        },
+                        burgundy: {
+                            DEFAULT: '#8b0032',
+                            dark: '#52001c',
+                            glow: '#b80043'
+                        },
+                        roseSoft: {
+                            DEFAULT: '#e899ac',
+                            light: '#ffd3dd',
+                            muted: '#a86978'
+                        },
+                        gold: {
+                            DEFAULT: '#d4af37',
+                            light: '#f3e5ab',
+                            dark: '#aa820a'
+                        },
+                        ivory: '#fdfbf7'
+                    },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                        ruqaa: ['Aref Ruqaa', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar & Smooth Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0914;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b0032;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(18, 14, 36, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 12px 40px 0 rgba(139, 0, 50, 0.3);
+        }
+
+        /* Gold Text Glow */
+        .text-gold-glow {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3), 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+        .text-rose-glow {
+            text-shadow: 0 0 10px rgba(232, 153, 172, 0.4);
+        }
+
+        /* Hourglass Flip Animation */
+        @keyframes hourglassFlip {
+            0% { transform: rotate(0deg); }
+            45% { transform: rotate(180deg); }
+            50% { transform: rotate(180deg); }
+            95% { transform: rotate(360deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-hourglass {
+            animation: hourglassFlip 8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Envelope CSS 3D Effect */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+        .envelope {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease-in-out;
+        }
+        .envelope-flap {
+            transform-origin: top;
+            transition: transform 0.6s 0.2s ease-in-out, z-index 0.2s;
+        }
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .letter-content {
+            transition: transform 0.8s 0.5s ease-in-out, opacity 0.5s 0.5s ease-in-out;
+        }
+        .envelope.open .letter-content {
+            transform: translateY(-120px) scale(1.02);
+            z-index: 20;
+        }
+
+        /* Manuscript Scroll Look */
+        .manuscript-bg {
+            background: linear-gradient(135deg, #18122B 0%, #0c0818 100%);
+            border: 2px solid #d4af37;
+            position: relative;
+        }
+        .manuscript-bg::before, .manuscript-bg::after {
+            content: "❖";
+            color: #d4af37;
+            position: absolute;
+            font-size: 1.2rem;
+        }
+        .manuscript-bg::before { top: 10px; right: 15px; }
+        .manuscript-bg::after { bottom: 10px; left: 15px; }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-night text-ivory font-tajawal overflow-x-hidden relative selection:bg-burgundy selection:text-gold-light">
+
+    <!-- Dynamic Background Canvas for Stars & Floating Petals -->
+    <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Top Music & Theme Navigation Bar -->
+    <nav class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-4 md:px-8 py-3 bg-night-deep/80 backdrop-blur-md border-b border-gold/10">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <span class="text-gold font-ruqaa text-lg md:text-xl font-bold tracking-wider">إلى ولاء ❤️</span>
+        </div>
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <!-- Music Control Button -->
+            <button id="musicToggle" class="flex items-center space-x-2 space-x-reverse px-3 py-1.5 rounded-full bg-burgundy/40 border border-gold/30 hover:bg-burgundy/70 transition-all text-xs md:text-sm">
+                <i id="musicIcon" class="fas me-1 fa-music text-gold"></i>
+                <span id="musicStatusText">الموسيقى: متوقفة</span>
+            </button>
+            
+            <!-- Night Glow Toggle -->
+            <button id="glowToggle" title="تبديل الإضاءة الليلية" class="p-2 rounded-full bg-night-light border border-gold/20 hover:border-gold/50 text-gold text-xs md:text-sm">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: Cinematic Intro Screen -->
+    <section id="hero" class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-16 z-10">
+        <div class="max-w-3xl mx-auto space-y-8 animate-float">
+            <!-- Decorative Icon -->
+            <div class="inline-block p-4 rounded-full bg-burgundy/20 border border-gold/30 text-gold text-3xl md:text-4xl shadow-2xl">
+                <i class="fas fa-crown"></i>
+            </div>
+
+            <!-- Soft Glowing Title -->
+            <h1 class="text-4xl md:text-6xl font-ruqaa text-gold text-gold-glow leading-relaxed">
+                إلى وَلاَء…
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-roseSoft-light font-amiri leading-loose max-w-2xl mx-auto">
+                «هناك كلماتٌ تأخرت في الوصول إلى قلبكِ، واليوم أريد أن أقولها بكل ما أوتيتُ من صدق…»
+            </p>
+
+            <p class="text-xs md:text-sm text-gold-light/70 font-light tracking-wide">
+                «رسالة من قلبٍ أحبكِ، وأخطأ في حقكِ، ويتمنى أن يصلح ما أفسده»
+            </p>
+
+            <!-- Enter Button -->
+            <div class="pt-6">
+                <button id="enterBtn" onclick="scrollToSection('apologyLetter')" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-ivory bg-gradient-to-r from-burgundy via-burgundy-glow to-burgundy rounded-full shadow-lg hover:shadow-burgundy/50 hover:scale-105 transition-all duration-300 border border-gold/40">
+                    <span class="me-2">افتحي رسالة قلبي</span>
+                    <i class="fas fa-envelope-open-text text-gold group-hover:translate-x-[-4px] transition-transform"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-gold/40 animate-bounce">
+            <i class="fas fa-chevron-down text-xl"></i>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER (Appears smooth) -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 space-y-28 py-16">
+
+        <!-- SECTION 2: The Great Apology Letter -->
+        <section id="apologyLetter" class="scroll-mt-24">
+            <div class="glass-card rounded-3xl p-6 md:p-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-burgundy/20 rounded-full blur-3xl"></div>
+                <div class="text-center mb-8">
+                    <span class="text-gold text-sm tracking-widest uppercase font-bold">اعتراف وصدق</span>
+                    <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow mt-2">رسالة الاعتذار الكبرى</h2>
+                    <div class="w-16 h-1 bg-gradient-to-r from-gold to-burgundy mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="prose prose-invert max-w-none font-amiri text-lg md:text-xl leading-relaxed text-ivory/90 space-y-6 text-justify">
+                    <p class="text-2xl text-roseSoft font-ruqaa">
+                        يا ولاء، يا صاحبة القلب الذي أحب…
+                    </p>
+                    <p>
+                        أعلمُ تمامًا أنني أخطأتُ في حقكِ، وأعلمُ أن الكلماتِ مهما بلغتْ من الجمال والرقة لن تعيدَ إليكِ بلمحةِ عينٍ شعورًا أفسدته أفعالي. لذلك لن أبحثَ اليومَ عن أعذارٍ تخفف عني مسؤولية ما حدث، ولا عن تبريراتٍ واهية تُسقط عني الخطأ؛ فالخطأ خطأي، وأنا أتحمله كاملاً.
+                    </p>
+                    <p>
+                        يؤلمني جدًا أن أكون أنا -من أقسمتُ على صون قلبكِ- السببَ في إدخال الحزنِ أو الضيقِ إلى روحكِ النقية. أعرفُ أن الكلامَ الجميل وحده لا يمحو الآثار، ولن أطلب منكِ أن تصدقي اعتذاري لمجرد أنني كتبته في هذه الصفحة، بل أتمنى أن تمنحيني الفرصة والأيام لأثبتَ لكِ بالمرء والأفعال صدق كل حرفٍ هنا.
+                    </p>
+                    <p>
+                        أريدُ أن أتعلم من هذا الخطأ كي أكون الزوجَ والرفيقَ الذي تستحقينه دائمًا. ولا أضغطُ عليكِ لتنسي أو لتسامحيني قبل أن تكوني مستعدةً تمامًا لذلك، فحقكِ ومشاعرُكِ أولاً.
+                    </p>
+                    <p class="text-gold text-center font-ruqaa text-2xl pt-4">
+                        «أنا آسف يا أميرتي… وآسف لأنني لم أكن كما تستحقين في تلك اللحظة.»
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Names in My Heart -->
+        <section id="namesGallery" class="scroll-mt-24 space-y-8">
+            <div class="text-center">
+                <span class="text-gold text-sm tracking-widest font-bold">معرض الدلال والتأطير</span>
+                <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow mt-1">أسماء تسكن قلبي</h2>
+                <p class="text-roseSoft text-sm mt-2">اضغطي على كل اسم لتكتشفي ما يعنيه لروحي</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6" id="namesGrid">
+                <!-- Javascript will inject name cards dynamically -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: What I Want You to Know -->
+        <section id="whatToKnow" class="scroll-mt-24 space-y-8">
+            <div class="text-center">
+                <span class="text-burgundy-glow text-sm tracking-widest font-bold">حقائق لا تتغير</span>
+                <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow mt-1">ما أريدكِ أن تعرفيه</h2>
+                <p class="text-ivory/70 text-sm mt-2">انقري على البطاقة لاستعراض مضمونها الحنون</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cardContainer">
+                <!-- Cards will be populated by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 5: If Time Turned Back -->
+        <section id="timeBack" class="scroll-mt-24">
+            <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden border border-gold/30">
+                <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 md:space-x-reverse">
+                    <!-- Hourglass Graphic -->
+                    <div class="flex-shrink-0 text-center">
+                        <div class="w-24 h-24 rounded-full bg-burgundy/30 border border-gold/40 flex items-center justify-center text-gold text-4xl shadow-inner animate-hourglass">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-center md:text-right">
+                        <h2 class="text-2xl md:text-3xl font-ruqaa text-gold">لو عاد بي الزمن…</h2>
+                        <p class="font-amiri text-lg text-ivory/90 leading-relaxed">
+                            لو عاد بي الزمن إلى تلك اللحظة تحديدًا، لاخترتُ الحكمة والرفق، ولتمسكتُ بالصمت والاحتواء بدلاً من تلك الكلمات أو التصرفات التي آلمتكِ. كنتُ سأمسكُ بيدكِ وأخبركِ كم أنتِ غالية.
+                        </p>
+                        <p class="font-amiri text-lg text-roseSoft leading-relaxed">
+                            ولكنني أعلم أن الندم وحده لا يعيد عقارب الساعة، ولن يغير الماضي.. لذلك اختار اليوم أن أتحمل المسؤولية كاملة في الحاضر، وأن أجعل اختياراتي القادمة معكِ مفعمة بالاحترام والرعاية والحرص الدائم على ابتسامتكِ.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: Vows From My Heart -->
+        <section id="myVows" class="scroll-mt-24 space-y-8">
+            <div class="text-center">
+                <span class="text-gold text-sm tracking-widest font-bold">التزام وثبات</span>
+                <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow mt-1">عهود من قلبي</h2>
+                <p class="text-roseSoft text-sm mt-2">انقري على العهد لتوثيقه في قلبي</p>
+            </div>
+
+            <div class="space-y-4 max-w-3xl mx-auto" id="vowsContainer">
+                <!-- Vows rendered via Javascript -->
+            </div>
+        </section>
+
+        <!-- SECTION 7: Poem to My Moon -->
+        <section id="poemSection" class="scroll-mt-24">
+            <div class="manuscript-bg rounded-3xl p-6 md:p-12 shadow-2xl relative text-center">
+                <div class="mb-6">
+                    <i class="fas fa-feather-alt text-gold text-3xl mb-2"></i>
+                    <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow">قصيدة إلى قمري</h2>
+                    <p class="text-roseSoft text-xs font-light mt-1">أبيات منسوجة لـ ولاء</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-base md:text-lg font-amiri leading-loose text-ivory/90 border-t border-b border-gold/20 py-8">
+                    <div class="space-y-3">
+                        <p>أَوَلاَءُ يَا قَمَرَ الحَيَاةِ وَنُورَهَا … قَلْبِي يَنَادِي بِالوَفَاءِ وَيَسْأَلُ</p>
+                        <p>إنِّي اعْتَرَفْتُ بِأَنَّنِي خَطَّاءُ … وَالذَّنْبُ يَعْصِرُ لَهْفَتِي وَيُقَتِّلُ</p>
+                        <p>مَا كُنْتُ أَرْضَى أَنْ أُرِيَكِ كَآبَةً … أَوْ أَنْ يَكُونَ بِعَيْنِكِ المَاءُ الهَطِلُ</p>
+                        <p>عُذْرًا لأَمِيرَةِ قَلْبِيَ السَّامِي الَّذِي … فِي عَرْشِهِ كُلُّ المُنَى تَتَأَمَّلُ</p>
+                        <p>أَسِفٌ عَلَى الأَوْقَاتِ حِينَ جَرَحْتُهَا … وَعَلَى كَلاَمٍ حِينَ يُقَالُ يُثَقَّلُ</p>
+                        <p>أَنْتِ المَلاَذُ وَأَنْتِ حُبِّي كُلُّهُ … لاَ شَيْءَ بَعْدَكِ فِي الحَيَاةِ يُجَمَّلُ</p>
+                        <p>أَشْتَاقُ لِلْبَسَمَاتِ مِنْكِ زَهِيَّةً … تَرْوِي الفُؤَادَ فَيَسْتَفِيقُ الأَمَلُ</p>
+                    </div>
+                    <div class="space-y-3">
+                        <p>يَا لُولُو الرُّوحِ الّتِي بِحَنَانِهَا … أَنْسَى الحُزْنَ وَبِالقُرْبِ نَسْتَظِلُّ</p>
+                        <p>عَهْدِي لَكِ أَنْ لاَ أُعِيدَ حِكَايةً … جَرَّتْ دُمُوعًا أَوْ ضَنًى يَتَرَهَّلُ</p>
+                        <p>فَالصَّفْحُ شِيمَةُ بَحْرِكِ المِعْطَاءِ يَا … مَلِكًا عَلَى كُلِّ المَشَاعِرِ يَعْلُو</p>
+                        <p>حُبِّي لَكِ الحُبُّ العَفِيفُ وَصَادِقٌ … لاَ يَنْتَهِي يَوْمًا وَلاَ يَتَبَدَّلُ</p>
+                        <p>إِنِّي أَتَيْتُكِ نَادِمًا وَمُؤَمِّلاً … أَنْ تَسْتَعِيدِي نُورَكِ وَتُقْبِلِي</p>
+                        <p>فَلْتَقْبَلِي عُذْرِي الشَّفِيفَ بِمُهْجَتِي … فَأَنَا لِعَيْنِكِ مُعْتَذِرٌ وَمُجَلَّلُ</p>
+                        <p>وَلْتَسْلَمِي دَوْمًا لِقَلْبِيَ وَاحَةً … فِيهَا الأَمَانُ وَفِيهَا صَفْوُ المَنْزِلِ</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-gold/60 font-ruqaa text-sm">
+                    — زوجكِ الذي يحبكِ دائمًا
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: Letter Inside Envelope -->
+        <section id="envelopeSection" class="scroll-mt-24 space-y-8">
+            <div class="text-center">
+                <span class="text-gold text-sm tracking-widest font-bold">سر حنون</span>
+                <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow mt-1">رسالة داخل ظرف</h2>
+                <p class="text-roseSoft text-sm mt-2">انقري على الظرف لفتحه وقراءة الرسالة السرية</p>
+            </div>
+
+            <div class="envelope-wrapper flex flex-col items-center justify-center my-8">
+                <!-- Interactive Envelope -->
+                <div id="interactiveEnvelope" onclick="toggleEnvelope()" class="envelope w-80 md:w-96 bg-burgundy rounded-lg border-2 border-gold/40 shadow-2xl cursor-pointer relative p-6 text-center overflow-visible select-none">
+                    
+                    <!-- Envelope Flap -->
+                    <div class="envelope-flap absolute top-0 left-0 right-0 h-24 bg-burgundy-dark border-b-2 border-gold/30 rounded-t-lg shadow-md flex items-center justify-center z-10">
+                        <i class="fas fa-heart text-gold text-2xl animate-pulse"></i>
+                    </div>
+
+                    <div class="pt-8 pb-4">
+                        <span class="font-ruqaa text-xl text-gold-light">إلى حبيبتي لولو ❤️</span>
+                        <p class="text-xs text-roseSoft/70 mt-2">اضغطي هنا لفتح الظرف</p>
+                    </div>
+
+                    <!-- Hidden Letter inside -->
+                    <div id="letterContent" class="letter-content opacity-0 pointer-events-none absolute top-0 left-0 right-0 bg-night-light border-2 border-gold rounded-xl p-6 shadow-2xl text-right z-30 space-y-4">
+                        <div class="flex justify-between items-center border-b border-gold/20 pb-2">
+                            <span class="font-ruqaa text-gold text-lg">رسالتي السرية لكِ</span>
+                            <i class="fas fa-times text-ivory/50 cursor-pointer hover:text-gold" onclick="event.stopPropagation(); toggleEnvelope();"></i>
+                        </div>
+                        <p class="font-amiri text-base text-ivory/90 leading-relaxed">
+                            حبيبتي لولو.. أكتب لكِ هذه الكلمات بعيدًا عن أي رسميات. أعلم كم تصنعين من أجلي، وكم يتحمل قلبكِ الرقيق. لا أريد أن أكتفي فقط بالقول إنني نادم؛ بل أريد أن أكون إنسانًا أفضل في عينيكِ، وأن أثبت لكِ أن اعتذاري هذا هو بداية لتغيير حقيقي يملأ أياّمنا دفئًا وطمأنينة.
+                        </p>
+                        <p class="font-ruqaa text-gold text-sm text-center pt-2 border-t border-gold/20">
+                            «أحبكِ يا ولاء، ولا أريد أن أكون سببًا في حزنكِ أبداً.»
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9: Space for Your Heart -->
+        <section id="spaceForHeart" class="scroll-mt-24">
+            <div class="glass-card rounded-3xl p-6 md:p-10 border border-gold/30 space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-roseSoft text-sm tracking-widest font-bold">مساحتكِ الخاصة</span>
+                    <h2 class="text-3xl font-ruqaa text-gold">مساحة لقلبكِ</h2>
+                    <p class="text-xs md:text-sm text-ivory/70 max-w-xl mx-auto">
+                        هذه المساحة لكِ أنتِ وحدكِ دون أي ضغوط.. اختاري ما يعبر عن مشاعركِ الحالية أو أكتبي ما تشائين، ويمكنكِ حفظه محلياً أو نسخه لنفسكِ.
+                    </p>
+                </div>
+
+                <!-- Emotional Quick Pick Options -->
+                <div class="flex flex-wrap justify-center gap-3 pt-2" id="emotionPickers">
+                    <button onclick="selectEmotion(this, 'ما زلت حزينة')" class="px-4 py-2 rounded-full border border-gold/20 bg-night/50 text-xs md:text-sm hover:border-gold/60 transition-all">
+                        💔 ما زلتُ حزينة
+                    </button>
+                    <button onclick="selectEmotion(this, 'أحتاج بعض الوقت')" class="px-4 py-2 rounded-full border border-gold/20 bg-night/50 text-xs md:text-sm hover:border-gold/60 transition-all">
+                        ⏳ أحتاجُ بعض الوقت
+                    </button>
+                    <button onclick="selectEmotion(this, 'أريد أن أتحدث معك')" class="px-4 py-2 rounded-full border border-gold/20 bg-night/50 text-xs md:text-sm hover:border-gold/60 transition-all">
+                        💬 أريدُ أن أتحدث معك
+                    </button>
+                    <button onclick="selectEmotion(this, 'وصلتني رسالتك')" class="px-4 py-2 rounded-full border border-gold/20 bg-night/50 text-xs md:text-sm hover:border-gold/60 transition-all">
+                        ✉️ وصلتني رسالتك
+                    </button>
+                    <button onclick="selectEmotion(this, 'أريد أن أخبرك بما أشعر به')" class="px-4 py-2 rounded-full border border-gold/20 bg-night/50 text-xs md:text-sm hover:border-gold/60 transition-all">
+                        🕊️ أريدُ أن أخبرك بما أشعر به
+                    </button>
+                </div>
+
+                <!-- Free Writing Text Area -->
+                <div class="space-y-3 pt-2">
+                    <textarea id="valMessageArea" rows="4" placeholder="اكتبي ما يجول بخاطرك هنا إن أردتِ..." class="w-full bg-night-deep/80 border border-gold/30 rounded-2xl p-4 text-ivory placeholder-ivory/30 focus:outline-none focus:border-gold font-amiri text-base resize-none"></textarea>
+                    
+                    <div class="flex flex-wrap justify-between items-center gap-3">
+                        <span id="savedNotice" class="text-xs text-roseSoft hidden">
+                            <i class="fas fa-check-circle me-1"></i> تم الحفظ في جهازكِ بسلام
+                        </span>
+                        <div class="flex space-x-2 space-x-reverse ms-auto">
+                            <button onclick="saveNoteLocally()" class="px-4 py-2 rounded-xl bg-burgundy/60 border border-gold/30 hover:bg-burgundy text-xs text-ivory transition-all">
+                                <i class="fas fa-save me-1 text-gold"></i> حفظ ملاحظتي
+                            </button>
+                            <button onclick="copyNoteText()" class="px-4 py-2 rounded-xl bg-night-light border border-gold/30 hover:border-gold text-xs text-ivory transition-all">
+                                <i class="fas fa-copy me-1 text-gold"></i> نسخ النص
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 10: Final Word My Princess -->
+        <section id="finalWord" class="scroll-mt-24 text-center space-y-8">
+            <div class="glass-card rounded-3xl p-8 md:p-12 space-y-6 relative overflow-hidden border-2 border-gold/40">
+                <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+
+                <div class="inline-block p-3 rounded-full bg-burgundy/30 text-gold text-2xl">
+                    <i class="fas fa-heart text-burgundy-glow"></i>
+                </div>
+
+                <h2 class="text-3xl md:text-4xl font-ruqaa text-gold text-gold-glow">كلمة أخيرة يا أميرتي</h2>
+
+                <p class="font-amiri text-lg md:text-xl text-ivory/90 leading-relaxed max-w-2xl mx-auto">
+                    «يا ولاء، يا أميرتي وملكة قلبي، لا أطلب منكِ أن تنسي ما حدث، ولا أن تتجاوزي حزنكِ قبل أن تكوني مستعدة. أريد فقط أن تعرفي أنني أدركت خطئي، وأنني آسف عليه من أعماق قلبي. أنتِ تستحقين مني حبًا يصاحبه احترام، وحنانًا يصاحبه اهتمام، واعتذارًا تصدقه الأفعال. وإن احتجتِ إلى وقت، فسأحترم ذلك. أحبكِ يا لولو.»
+                </p>
+
+                <!-- Final Action Button -->
+                <div class="pt-4">
+                    <button id="finalMsgBtn" onclick="showFinalAcknowledgement()" class="px-8 py-3 rounded-full bg-gradient-to-r from-gold/20 via-gold/40 to-gold/20 border border-gold text-gold font-bold hover:bg-gold hover:text-night transition-all duration-300">
+                        وصلتني رسالتك
+                    </button>
+                </div>
+
+                <!-- Acknowledgement Alert Box (Hidden Initially) -->
+                <div id="finalAckModal" class="hidden mt-6 p-4 rounded-2xl bg-burgundy/40 border border-gold/50 text-gold-light font-amiri text-lg animate-fade-in">
+                    ✨ شكرًا لأنكِ قرأتِ كلماتي، أتمنى أن يكون قلبكِ بخير دائمًا. ❤️
+                </div>
+            </div>
+        </section>
+
+        <!-- Helper Guide for GitHub Pages Deployment -->
+        <section id="githubGuide" class="scroll-mt-24">
+            <div class="p-6 rounded-2xl bg-night-deep border border-gold/20 text-xs text-ivory/60 space-y-3">
+                <div class="flex justify-between items-center cursor-pointer" onclick="toggleGithubInstructions()">
+                    <span class="font-bold text-gold"><i class="fab fa-github me-2"></i>كيفية رفع هذا الموقع مجانًا عبر GitHub Pages إلى ولاء؟</span>
+                    <i id="githubGuideArrow" class="fas fa-chevron-down text-gold"></i>
+                </div>
+                <div id="githubGuideContent" class="hidden space-y-2 text-justify pt-2 border-t border-gold/10">
+                    <p>1. قم بإنشاء حساب مجاني على موقع <strong class="text-gold">GitHub.com</strong> إذا لم يكن لديك حساب.</p>
+                    <p>2. أنشئ المستودع الجديد (New Repository) وسمّه مثلاً: <code class="text-roseSoft">for-walaa</code> واجعله Public.</p>
+                    <p>3. قم برفع هذا الملف وتسميته بـ <code class="text-roseSoft">index.html</code> داخل المستودع.</p>
+                    <p>4. اذهب إلى إعدادات المستودع (Settings) -> ثم قسم (Pages) -> في اختر الفرع (Branch) اختر <code class="text-roseSoft">main</code> أو <code class="text-roseSoft">master</code> ثم احفظ (Save).</p>
+                    <p>5. خلال دقيقة واحدة، سيرسل لك GitHub رابطًا مباشرًا لموقع الاعتذار مثل: <code class="text-gold">https://username.github.io/for-walaa</code> لترسله فوراً إلى ملكة قلبك ولاء ❤️.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-xs text-gold/40 relative z-10 border-t border-gold/10">
+        <p>مصمم بصدق ومحبة خصيصًا لـ ولاء | 2026</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* --------------------------------------------------
+           1. DATA STRUCTURES (Names, Cards, Vows)
+        -------------------------------------------------- */
+        const namesData = [
+            { name: "ولاء", title: "الاسم الذي يحمل مكانتكِ في قلبي", desc: "أجمل الأسماء وأقربها إلى روحي، يرتبط في عقلي دائماً بالطمأنينة والسكن." },
+            { name: "لولو", title: "دلالكِ الذي أحب", desc: "اسم ندائكِ المفضل حين أريد أن أستحضر كل الدفء والبراءة في حديثنا." },
+            { name: "أميرتي", title: "لأنكِ تستحقين الحنان والاهتمام", desc: "تظلّين ملكة متوجة على قلبي تستحق الرعاية والتقدير في كل وقت." },
+            { name: "ملكة قلبي", title: "لأن لكِ مكانة لا يشغلها أحد", desc: "مكانتكِ محفورة في صميم الروح، ولا يمكن لأي ظرف أو خلاف أن ينقص منها." },
+            { name: "قمري", title: "لأن وجودكِ يجعل أيامي أكثر نورًا", desc: "تضيئين أوقاتي المعتمة وتبثين الدفء والشغف في حياتي." },
+            { name: "نبض قلبي", title: "لأنكِ عزيزة على روحي", desc: "أشعر بكِ في كل لحظة، ووجودكِ هو الشريان الحقيقي لسعادتي." },
+            { name: "أميرة قلبي", title: "لأنكِ تستحقين أجمل الكلمات", desc: "لا أجد في القواميس ما يوفيكِ حقكِ من الدلال والمحبة." },
+            { name: "حبيبتي", title: "كلمة تختصر الكثير مما أشعر به", desc: "اختصار لكل مشاعر الوفاء والشغف والامتنان لوجودكِ بجانبي." }
+        ];
+
+        const cardsData = [
+            { title: "لم يكن ينبغي أن أكون سببًا في حزنكِ", text: "إن مهمتي الأولى والأساسية هي حمايتكِ وإسعادكِ، وآسف لأنني قصّرتُ في ذلك." },
+            { title: "مشاعركِ تستحق أن أستمع إليها وأحترمها", text: "حزنكِ ليس أمراً عابراً، بل هو أولوية أضعها فوق كل اعتبار." },
+            { title: "لا أريد أن أنتصر في خلاف وأخسر راحتكِ", text: "لا قيمة لأي رأي أو موقف إذا كان ثمنه خدش خاطر حبيبة عمري." },
+            { title: "لا أريد أن يكون الاعتذار مجرد وسيلة لإنهاء الخلاف", text: "أريد اعتذاراً يعيد بناء الثقة، ويؤكد لكِ حرصي الصادق على مشاعركِ." },
+            { title: "أريد أن أكون أفضل في تعاملي معكِ", text: "أعمل على نفسي لكي أكون السند والزوج والرفيق الحنون الذي تطمئنين معه." },
+            { title: "لا أريد أن تشعري بأن عليكِ إخفاء حزنكِ عني", text: "قلبي يتسع لكِ في كل حالاتكِ، وحزنكِ محط اهتمامي ورعايتي." },
+            { title: "أريد أن تكون علاقتنا مساحة للطمأنينة والاحترام", text: "أن تبقى المحبة صلبة والأمان متجذراً مهما اختلفت الظروف." }
+        ];
+
+        const vowsData = [
+            "العهد الأول: أن أستمع إليكِ جيدًا قبل أن أرد.",
+            "العهد الثاني: ألا أستهين بمشاعركِ مهما اختلفنا.",
+            "العهد الثالث: أن أتحمل مسؤولية أخطائي دون إلقاء اللوم عليكِ.",
+            "العهد الرابع: أن أعتذر بصدق عندما أخطئ.",
+            "العهد الخامس: أن أحترم حدودكِ ووقتكِ ومشاعركِ.",
+            "العهد السادس: أن أجعل التغيير ظاهرًا في أفعالي، لا في وعودي فقط.",
+            "العهد السابع: أن أحافظ على المودة والاحترام حتى في أصعب لحظات الاختلاف."
+        ];
+
+        /* --------------------------------------------------
+           2. CANVAS ANIMATION (STARS & FLOATING PETALS)
+        -------------------------------------------------- */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = Math.random() * 0.5 + 0.1;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.color = Math.random() > 0.4 ? '#d4af37' : '#e899ac';
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < 0 || this.x < 0 || this.x > canvas.width) {
+                    this.reset();
+                    this.y = canvas.height;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 70; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* --------------------------------------------------
+           3. WEB AUDIO SYNTHESIZER FOR SOFT ROMANTIC PIANO
+        -------------------------------------------------- */
+        let audioCtx = null;
+        let isPlaying = false;
+        let musicInterval = null;
+
+        const melodyNotes = [
+            261.63, 329.63, 392.00, 493.88, 523.25, // C4, E4, G4, B4, C5
+            440.00, 349.23, 293.66, 329.63, 392.00  // A4, F4, D4, E4, G4
+        ];
+
+        function playPianoTone(freq, duration = 2.5) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) { console.log(e); }
+        }
+
+        function toggleMusic() {
+            const statusText = document.getElementById('musicStatusText');
+            const musicIcon = document.getElementById('musicIcon');
+
+            if (!isPlaying) {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                let step = 0;
+                musicInterval = setInterval(() => {
+                    const note = melodyNotes[step % melodyNotes.length];
+                    playPianoTone(note, 2.8);
+                    step++;
+                }, 1600);
+
+                isPlaying = true;
+                statusText.innerText = "الموسيقى: تعمل 🎵";
+                musicIcon.classList.add('animate-spin');
+            } else {
+                clearInterval(musicInterval);
+                isPlaying = false;
+                statusText.innerText = "الموسيقى: متوقفة";
+                musicIcon.classList.remove('animate-spin');
+            }
+        }
+
+        document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+
+        /* --------------------------------------------------
+           4. DYNAMIC RENDER FUNCTIONS
+        -------------------------------------------------- */
+        // Render Names Cards
+        function renderNames() {
+            const grid = document.getElementById('namesGrid');
+            grid.innerHTML = namesData.map((item, index) => `
+                <div onclick="showNameModal(${index})" class="glass-card glass-card-hover rounded-2xl p-4 text-center cursor-pointer border border-gold/20 flex flex-col justify-center items-center h-32">
+                    <span class="font-ruqaa text-2xl text-gold text-gold-glow">${item.name}</span>
+                    <span class="text-xs text-roseSoft mt-2 line-clamp-1">${item.title}</span>
+                </div>
+            `).join('');
+        }
+
+        function showNameModal(index) {
+            const item = namesData[index];
+            alertBox(`❤️ ${item.name}`, `${item.title}\n\n${item.desc}`);
+        }
+
+        // Render "What I Want You To Know" Cards
+        function renderCards() {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = cardsData.map((item, i) => `
+                <div class="glass-card glass-card-hover rounded-2xl p-6 space-y-3 border-r-4 border-r-burgundy">
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <i class="fas fa-sparkles text-gold text-sm"></i>
+                        <h3 class="font-bold text-base text-gold-light">${item.title}</h3>
+                    </div>
+                    <p class="text-xs text-ivory/80 leading-relaxed font-amiri">${item.text}</p>
+                </div>
+            `).join('');
+        }
+
+        // Render Vows
+        function renderVows() {
+            const container = document.getElementById('vowsContainer');
+            const savedVows = JSON.parse(localStorage.getItem('walaa_vows') || '{}');
+
+            container.innerHTML = vowsData.map((vow, i) => {
+                const isChecked = savedVows[i] ? true : false;
+                return `
+                    <div onclick="toggleVow(${i})" class="glass-card rounded-xl p-4 flex items-center justify-between cursor-pointer border hover:border-gold transition-all ${isChecked ? 'border-gold bg-burgundy/20' : 'border-gold/10'}">
+                        <span class="font-amiri text-base md:text-lg text-ivory/90">${vow}</span>
+                        <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${isChecked ? 'bg-gold text-night' : 'bg-night border border-gold/40 text-gold'}">
+                            ${isChecked ? '✓' : i + 1}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleVow(index) {
+            let savedVows = JSON.parse(localStorage.getItem('walaa_vows') || '{}');
+            savedVows[index] = !savedVows[index];
+            localStorage.setItem('walaa_vows', JSON.stringify(savedVows));
+            renderVows();
+        }
+
+        /* --------------------------------------------------
+           5. INTERACTIVE ENVELOPE TOGGLE
+        -------------------------------------------------- */
+        function toggleEnvelope() {
+            const env = document.getElementById('interactiveEnvelope');
+            const letter = document.getElementById('letterContent');
+            env.classList.toggle('open');
+            
+            if (env.classList.contains('open')) {
+                letter.classList.remove('opacity-0', 'pointer-events-none');
+                letter.classList.add('opacity-100');
+            } else {
+                letter.classList.add('opacity-0', 'pointer-events-none');
+                letter.classList.remove('opacity-100');
+            }
+        }
+
+        /* --------------------------------------------------
+           6. EMOTION & NOTE SPACE LOGIC
+        -------------------------------------------------- */
+        function selectEmotion(btn, emotionText) {
+            document.querySelectorAll('#emotionPickers button').forEach(b => {
+                b.classList.remove('bg-burgundy', 'border-gold');
+            });
+            btn.classList.add('bg-burgundy', 'border-gold');
+            
+            const area = document.getElementById('valMessageArea');
+            if(!area.value.includes(emotionText)){
+                area.value = emotionText + (area.value ? " - " + area.value : "");
+            }
+        }
+
+        function saveNoteLocally() {
+            const val = document.getElementById('valMessageArea').value;
+            localStorage.setItem('walaa_note', val);
+            const notice = document.getElementById('savedNotice');
+            notice.classList.remove('hidden');
+            setTimeout(() => notice.classList.add('hidden'), 3000);
+        }
+
+        function copyNoteText() {
+            const area = document.getElementById('valMessageArea');
+            if(!area.value) return;
+            navigator.clipboard.writeText(area.value).then(() => {
+                alertBox("تم النسخ", "تم نسخ مشاعركِ إلى الحافظة بنجاح ❤️");
+            }).catch(() => {
+                document.execCommand('copy');
+            });
+        }
+
+        /* --------------------------------------------------
+           7. FINAL ACKNOWLEDGEMENT & UTILS
+        -------------------------------------------------- */
+        function showFinalAcknowledgement() {
+            document.getElementById('finalAckModal').classList.remove('hidden');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleGithubInstructions() {
+            const content = document.getElementById('githubGuideContent');
+            const arrow = document.getElementById('githubGuideArrow');
+            content.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        function alertBox(title, message) {
+            const modal = document.createElement('div');
+            modal.className = "fixed inset-0 bg-night-deep/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in";
+            modal.innerHTML = `
+                <div class="glass-card max-w-sm w-full p-6 rounded-2xl border-2 border-gold text-center space-y-4">
+                    <h3 class="font-ruqaa text-2xl text-gold">${title}</h3>
+                    <p class="font-amiri text-base text-ivory/90 whitespace-pre-line leading-relaxed">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="px-6 py-2 rounded-full bg-burgundy border border-gold/40 text-gold text-sm font-bold">
+                        إغلاق
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        /* --------------------------------------------------
+           8. INIT ON LOAD
+        -------------------------------------------------- */
+        window.onload = function() {
+            renderNames();
+            renderCards();
+            renderVows();
+
+            // Load saved note if exists
+            const savedNote = localStorage.getItem('walaa_note');
+            if (savedNote) {
+                document.getElementById('valMessageArea').value = savedNote;
+            }
+        };
+    </script>
+</body>
+</html>
